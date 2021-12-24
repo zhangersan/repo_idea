@@ -17,4 +17,7 @@ public interface TestDao {
     public List<Test> findAll();
     
     void save();
+    
+    void test11();
+    void test21();
 }
