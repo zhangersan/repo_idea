@@ -15,4 +15,6 @@ public interface TestDao {
      * @return
      */
     public List<Test> findAll();
+    
+    void save();
 }
