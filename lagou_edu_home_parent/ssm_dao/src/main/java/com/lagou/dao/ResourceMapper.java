@@ -37,8 +37,10 @@ public interface ResourceMapper {
      */
     void updateResource(Resource resource);
 
+
+
     /**
-     * 删除
+     * 根据id删除对应资源分类信息
      * @param id
      */
     void deleteResource(Integer id);

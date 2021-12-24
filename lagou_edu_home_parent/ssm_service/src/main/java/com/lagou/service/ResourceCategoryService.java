@@ -15,4 +15,29 @@ public interface ResourceCategoryService {
      * @return
      */
     List<ResourceCategory> findAllResourceCategory();
+
+    /**
+     * 新增
+     * @param resourceCategory
+     */
+    void saveResourceCategory(ResourceCategory resourceCategory);
+
+    /**
+     * 修改时回显
+     * @param id
+     * @return
+     */
+    ResourceCategory findResourceCategoryById(Integer id);
+
+    /**
+     * 修改
+     * @param resourceCategory
+     */
+    void updateResourceCategory(ResourceCategory resourceCategory);
+
+    /**
+     * 根据id删除
+     * @param id
+     */
+    void deleteResourceCategory(Integer id);
 }

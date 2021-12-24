@@ -33,4 +33,44 @@
         delete from roles where id = #{id}
     </delete>
 
+    <!--根据角色id查询对应资源信息-->
+    <select id="findAllResourceByRoleIdAndCategoryId" resultType="com.lagou.domain.Resource" parameterType="int">
+        SELECT
+          rs.*
+        FROM
+          roles r
+          INNER JOIN role_resource_relation rr
+            ON r.id = rr.`role_id`
+          INNER JOIN resource rs
+            ON rr.`resource_id` = rs.`id`
+        WHERE r.id = #{roleId} and rs.category_id = #{categoryId}
+    </select>
+
+    <!--根据角色id查询对应资源分类信息-->
+    <select id="findAllResourceCategoryByRoleId" resultType="com.lagou.domain.ResourceCategory" parameterType="int">
+        SELECT DISTINCT
+          rc.*
+        FROM
+          role_resource_relation rr
+          INNER JOIN resource rs
+            ON rs.id = rr.`resource_id`
+          INNER JOIN resource_category rc
+            ON rs.`category_id` = rc.id
+        WHERE rr.`role_id` = #{roleId}
+    </select>
+
+    <!--根据角色id查询对应的资源id-->
+    <select id="findResourceIdByRoleId" resultType="java.lang.Integer" parameterType="int">
+        select rr.resource_id from roles r inner join role_resource_relation rr on r.id = rr.role_id where r.id = #{roleId}
+    </select>
+
+    <!--根据角色id删除角色资源中间表-->
+    <delete id="deleteRoleResourceRelation" parameterType="int">
+        delete from role_resource_relation where role_id = #{roleId}
+    </delete>
+
+    <!--为角色分配资源信息-->
+    <insert id="roleContextResource" parameterType="com.lagou.domain.Role_menu_relation">
+        insert into role_resource_relation values(null,#{resourceId},#{roleId},#{createdTime},#{updatedTime},#{createdBy},#{updatedBy})
+    </insert>
 </mapper>

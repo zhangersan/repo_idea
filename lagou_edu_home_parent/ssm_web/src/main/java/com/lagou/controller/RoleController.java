@@ -1,15 +1,13 @@
 package com.lagou.controller;
 
-import com.lagou.domain.Menu;
-import com.lagou.domain.RoleMenuVO;
-import com.lagou.domain.ResponseResult;
-import com.lagou.domain.Role;
+import com.lagou.domain.*;
 import com.lagou.service.MenuService;
 import com.lagou.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
@@ -74,7 +72,7 @@ public class RoleController {
     @RequestMapping("/RoleContextMenu")
     public ResponseResult RoleContextMenu(@RequestBody RoleMenuVO roleMenuVO){
         roleService.roleContextMenu(roleMenuVO);
-        return new ResponseResult(true,200,"查询成功",null);
+        return new ResponseResult(true,200,"分配成功",null);
     }
 
     /**
@@ -86,5 +84,39 @@ public class RoleController {
     public ResponseResult deleteRole(Integer id){
         roleService.deleteRole(id);
         return new ResponseResult(true,200,"删除成功",null);
+    }
+
+    /**
+     * 根据角色id查询当前对应的资源信息(资源分类和资源信息)
+     * @param roleId
+     * @return
+     */
+    @RequestMapping("/findResourceListByRoleId")
+    public ResponseResult findResourceListByRoleId(Integer roleId){
+
+        List<ResourceCategory> resourceCategoryList = roleService.findResourceListByRoleId(roleId);
+        return new ResponseResult(true,200,"响应成功!",resourceCategoryList);
+    }
+
+    /**
+     * 根据角色id查询对应的资源id
+     * @param roleId
+     * @return
+     */
+    @RequestMapping("/findResourceIdByRoleId")
+    public ResponseResult findResourceIdByRoleId(@RequestParam("id") Integer roleId){
+        List<Integer> resourceIdList = roleService.findResourceIdByRoleId(roleId);
+        return new ResponseResult(true,200,"查询成功",resourceIdList);
+    }
+
+    /**
+     * 为角色分配资源
+     * @param RoleResourceVO
+     * @return
+     */
+    @RequestMapping("/roleContextResource")
+    public ResponseResult roleContextResource(@RequestBody RoleResourceVO RoleResourceVO){
+        roleService.roleContextResource(RoleResourceVO);
+        return new ResponseResult(true,200,"分配成功",null);
     }
 }

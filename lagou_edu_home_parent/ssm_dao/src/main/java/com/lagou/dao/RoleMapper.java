@@ -1,7 +1,7 @@
 package com.lagou.dao;
 
-import com.lagou.domain.Role;
-import com.lagou.domain.Role_menu_relation;
+import com.lagou.domain.*;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -19,7 +19,9 @@ public interface RoleMapper {
     public List<Role> findAllRole(Role role);
 
     /*为角色分配菜单*/
+
     //1.查询所有菜单列表
+
     /**
      * 2.根据roleId查找menuId
      * @param roleId
@@ -47,5 +49,42 @@ public interface RoleMapper {
      */
     public void deleteRole(Integer id);
 
+    /**
+     * 根据角色id查询对应资源分类信息
+     * @param roleId
+     * @return
+     */
+    List<ResourceCategory> findAllResourceCategoryByRoleId(Integer roleId);
 
+    /**
+     * 根据角色id和分类id查询对应属于哪个资源分类下的资源信息
+     * @param roleId
+     * @param categoryId
+     * @return
+     */
+    List<Resource> findAllResourceByRoleIdAndCategoryId(@Param("roleId") Integer roleId,@Param("categoryId") Integer categoryId);
+
+    /*为角色分配资源*/
+    //根据角色查询所有资源信息
+
+    /**
+     * 根据角色id查询对应的资源id
+     * @param roleId
+     * @return
+     */
+    List<Integer> findResourceIdByRoleId(Integer roleId);
+
+    /**
+     * 根据角色id删除角色资源中间表
+     * @param roleId
+     */
+    void deleteRoleResourceRelation(Integer roleId);
+
+    /**
+     * 为角色分配资源信息
+     * @param role_resource_relation
+     */
+    void roleContextResource(Role_resource_relation role_resource_relation);
+
+    /*为角色分配资源*/
 }
